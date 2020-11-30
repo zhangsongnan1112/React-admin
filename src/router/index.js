@@ -3,7 +3,7 @@ import { HashRouter, Switch, Route } from 'react-router-dom'
 import Layout from '../pages/Layout'
 import login from '../pages/login'
 
-export default () => (
+export default function AppRouter () {
   <HashRouter>
     {/* 相同的情况下只匹配一个 */}
     <Switch> 
@@ -11,4 +11,4 @@ export default () => (
       <Route component={login} path='/login'></Route>
     </Switch>
   </HashRouter>
-)
+}
