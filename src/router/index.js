@@ -8,8 +8,8 @@ export default function AppRouter () {
     <HashRouter>
       {/* 相同的情况下只匹配一个 */}
       <Switch> 
-        <Route component={Layout} exact path='/'></Route>
-        <Route component={login} path='/login'></Route>
+        <Route component={login} exact path='/'></Route>
+        {/* <Route component={login} path='/login'></Route> */}
       </Switch>
     </HashRouter>
   )
