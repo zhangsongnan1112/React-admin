@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import{Button} from 'antd'
-import '../../styles/base.css'
+import '../../styles/base.scss'
 class Layout extends Component {
   constructor(props) {
     super(props);
