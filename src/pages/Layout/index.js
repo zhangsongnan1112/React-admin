@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import{Button} from 'antd'
-import '../../styles/base.scss'
+import{ Button } from 'antd'
+import '../../styles/layout.scss'
 class Layout extends Component {
   constructor(props) {
     super(props);
@@ -8,10 +8,10 @@ class Layout extends Component {
   }
   render() { 
     return ( 
-      <div className="box">
-        1111
-        <Button>11</Button>
-      </div>
+      <ul className="box">
+        <li>11111</li>
+        <Button type="primary">11</Button>
+      </ul>
     );
   }
 }
