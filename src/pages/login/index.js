@@ -7,7 +7,7 @@ class Layout extends Component {
     this.state = {  }
   }
 
-  finish() {
+  finish = () => {
     alert()
   }
 
@@ -23,7 +23,7 @@ class Layout extends Component {
           initialValues={{
             remember: true,
           }}
-          onFinish={() => {this.finish()}}
+          onFinish={() => this.finish}
         >
           <Form.Item
             name="username"
