@@ -1,52 +1,33 @@
-import React, { Component } from 'react';
-import { Form, Input, Button } from 'antd';
+import React, { Component, Fragment } from 'react';
 import './login.scss'
-class Layout extends Component {
+import LoginForm from './LoginForm'
+import RegisterForm from './RegisterForm'
+class Login extends Component {
   constructor(props) {
     super(props);
-    this.state = {  }
+    this.state = { 
+      formType: 'login'
+    }
   }
 
-  finish = () => {
-    alert()
+  toggleType = (value) =>{
+    this.setState({
+      formType: value
+    })
   }
+
+
 
   render() { 
     return ( 
-      <div className="container">
-        <div className="form-header">
-          <h1>登录</h1>
-          <span>注册账号</span>
-        </div>
-        <Form
-          name="basic"
-          initialValues={{
-            remember: true,
-          }}
-          onFinish={() => this.finish}
-        >
-          <Form.Item
-            name="username"
-            rules={[{ required: true, message: 'Please input your username!'}]}
-          >
-            <Input />
-          </Form.Item>
-
-          <Form.Item
-            name="password"
-            rules={[{ required: true, message: 'Please input your password!'}]}
-          >
-            <Input.Password />
-          </Form.Item>
-          <Form.Item>
-            <Button type="primary" htmlType="submit">
-              登录
-            </Button>
-          </Form.Item>
-        </Form>
-      </div>
+      <Fragment>
+        {this.state.formType === 'login' ? 
+          <LoginForm switchType={this.toggleType}></LoginForm> : 
+          <RegisterForm switchType={this.toggleType}></RegisterForm>
+        } 
+      </Fragment>
     );
   }
 }
  
-export default Layout;
+export default Login;

@@ -1,7 +1,6 @@
 .container {
   width: 300px;
   height: 300px;
-  border: 1px solid #ccc;
   position: absolute;
   top: 0;
   left: 0;
@@ -18,7 +17,6 @@
     margin-bottom: 10px;
     h1 {
       color: #fff;
-      cursor: pointer;
     }
     span {
       color: #ddd;
