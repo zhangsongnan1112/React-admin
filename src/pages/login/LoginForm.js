@@ -27,7 +27,7 @@ class LoginForm extends Component {
           initialValues={{
             remember: true,
           }}
-          onFinish={() => this.finish}
+          onFinish={this.finish}
         >
           <Form.Item name="username" rules={[
             { required: true, message: '用户名不能为空'},
@@ -43,7 +43,7 @@ class LoginForm extends Component {
             <Input.Password prefix={<ShoppingOutlined />} placeholder="Password"/>
           </Form.Item>
 
-          <Form.Item  name="password" rules={[
+          <Form.Item  name="code" rules={[
             { required: true, message: '验证码不能为空'},
             { len: 6, message: '请输入长度为6位的验证码'}
           ]}>
