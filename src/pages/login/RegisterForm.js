@@ -1,5 +1,5 @@
 import {Divider} from 'antd'
-import React, { Component, Fragment } from 'react';
+import React, { Component } from 'react';
 import { Form, Input, Button, Row, Col } from 'antd';
 import { UserOutlined, ShoppingOutlined, UnlockOutlined } from '@ant-design/icons';
 class RegisterForm extends Component {

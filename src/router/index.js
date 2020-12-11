@@ -1,6 +1,6 @@
 import React from 'react'
 import { HashRouter, Switch, Route } from 'react-router-dom'
-import Layout from '../pages/Layout'
+// import Layout from '../pages/Layout'
 import login from '../pages/login'
 
 export default function AppRouter () {

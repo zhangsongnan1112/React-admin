@@ -1,6 +1,7 @@
-import React, { Component, Fragment } from 'react';
+import React, { Component } from 'react';
 import { Form, Input, Button, Row, Col } from 'antd';
 import { UserOutlined, ShoppingOutlined, UnlockOutlined } from '@ant-design/icons';
+import { VALIDATOR_PASSWORD }  from '../../utils/validator'
 class LoginForm extends Component {
   constructor(props) {
     super(props);
@@ -28,15 +29,24 @@ class LoginForm extends Component {
           }}
           onFinish={() => this.finish}
         >
-          <Form.Item name="username" rules={[{ required: true, message: 'Please input your username!'}]}>
+          <Form.Item name="username" rules={[
+            { required: true, message: '用户名不能为空'},
+            { type: 'email', message: '邮箱格式不正确'},
+          ]}>
             <Input prefix={<UserOutlined />} placeholder="Username" className=""/>
           </Form.Item>
 
-          <Form.Item name="password" rules={[{ required: true, message: 'Please input your password!'}]}>
+          <Form.Item name="password" rules={[
+            { required: true, message: '密码不能为空'},
+            { pattern: VALIDATOR_PASSWORD, message: '请输入大于6位小于20位的数字+密码'}
+          ]}>
             <Input.Password prefix={<ShoppingOutlined />} placeholder="Password"/>
           </Form.Item>
 
-          <Form.Item  name="password" rules={[{ required: true, message: 'Please input your password!'}]}>
+          <Form.Item  name="password" rules={[
+            { required: true, message: '验证码不能为空'},
+            { len: 6, message: '请输入长度为6位的验证码'}
+          ]}>
              <Row gutter={16}>
               <Col span={15}>
                 <Input prefix={<UnlockOutlined />} placeholder="Code"/>
