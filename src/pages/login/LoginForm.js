@@ -2,13 +2,18 @@ import React, { Component } from 'react';
 import { Form, Input, Button, Row, Col } from 'antd';
 import { UserOutlined, ShoppingOutlined, UnlockOutlined } from '@ant-design/icons';
 import { VALIDATOR_PASSWORD }  from '../../utils/validator'
+import { Login } from '../../api/account'
 class LoginForm extends Component {
   constructor(props) {
     super(props);
     this.state = {  }
   }
   finish = () => {
-    alert()
+    Login().then(res => {
+
+    }).catch(error => {
+      alert()
+    })
   }
 
   toggleType(){
