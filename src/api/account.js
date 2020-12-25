@@ -15,3 +15,12 @@ export function getCode(data) {
     data
   })
 }
+
+export function Register(data){
+  return service.request({
+    url: '/register/',
+    method: 'post',
+    data
+  })
+
+}
