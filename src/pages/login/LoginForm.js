@@ -3,11 +3,15 @@ import { Form, Input, Button, Row, Col } from 'antd';
 import { UserOutlined, ShoppingOutlined, UnlockOutlined } from '@ant-design/icons';
 import { VALIDATOR_PASSWORD }  from '../../utils/validator'
 import { Login } from '../../api/account'
+import Code from "../../component/Coder"
 class LoginForm extends Component {
   constructor(props) {
     super(props);
-    this.state = {  }
+    this.state = {
+      username: ''
+    }
   }
+  // 登录
   finish = () => {
     Login().then(res => {
 
@@ -16,11 +20,19 @@ class LoginForm extends Component {
     })
   }
 
+  usernameChange = (e) => {
+    this.setState({
+      username: e.target.value
+    })
+  }
+
   toggleType(){
     this.props.switchType('register')
   }
 
   render() { 
+    const { username } = this.state
+    const _this = this
     return (
       <div className="container">
         <div className="form-header">
@@ -35,10 +47,24 @@ class LoginForm extends Component {
           onFinish={this.finish}
         >
           <Form.Item name="username" rules={[
-            { required: true, message: '用户名不能为空'},
+            { required: true, message: '邮箱不能为空'},
             { type: 'email', message: '邮箱格式不正确'},
+            // ({ getFieldValue }) => ({
+            //   validator(rule, value) {
+            //     if (value) {
+            //       if (testEmail(value)) {
+            //         _this.setState({
+            //           codeDisabled: false
+            //         })
+            //         return Promise.resolve();
+            //       }
+            //       return Promise.reject('邮箱格式不正确');       
+            //     }
+            //    return Promise.reject();       
+            //   },
+            // }),
           ]}>
-            <Input prefix={<UserOutlined />} placeholder="Username" className=""/>
+            <Input value={username} onChange={this.usernameChange} prefix={<UserOutlined />} placeholder="Username" className=""/>
           </Form.Item>
 
           <Form.Item name="password" rules={[
@@ -57,7 +83,7 @@ class LoginForm extends Component {
                 <Input prefix={<UnlockOutlined />} placeholder="Code"/>
               </Col>
               <Col span={9}>
-                <Button type="danger" block>获取验证码</Button>
+                <Code username={username}/>
               </Col>
             </Row>
           </Form.Item>

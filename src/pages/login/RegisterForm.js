@@ -2,10 +2,13 @@
 import React, { Component } from 'react';
 import { Form, Input, Button, Row, Col } from 'antd';
 import { UserOutlined, ShoppingOutlined, UnlockOutlined } from '@ant-design/icons';
+import Code from "../../component/Coder"
 class RegisterForm extends Component {
   constructor(props) {
     super(props);
-    this.state = {  }
+    this.state = {
+      username: ''
+    }
   }
   finish = () => {
     alert()
@@ -16,6 +19,7 @@ class RegisterForm extends Component {
   }
 
   render() { 
+    const { username } = this.state
     return ( 
       <div className="container">
         <div className="form-header">
@@ -47,7 +51,7 @@ class RegisterForm extends Component {
                 <Input prefix={<UnlockOutlined />} placeholder="Code"/>
               </Col>
               <Col span={9}>
-                <Button type="danger" block>获取验证码</Button>
+                <Code username={username}></Code>
               </Col>
             </Row>
           </Form.Item>
