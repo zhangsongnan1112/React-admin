@@ -1,22 +1,45 @@
 import React, { Component } from 'react';
-import { Form, Input, Button, Row, Col } from 'antd';
+import { Form, Input, Button, Row, Col, message } from 'antd';
 import { UserOutlined, ShoppingOutlined, UnlockOutlined } from '@ant-design/icons';
 import { VALIDATOR_PASSWORD }  from '../../utils/validator'
 import { Login } from '../../api/account'
 import Code from "../../component/Coder"
+// 密码加密
+import CryptoJS from 'crypto-js'
 class LoginForm extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      username: ''
+      username: '',
+      password: '',
+      code: '',
+      module: 'login',
+      loading: false
     }
   }
   // 登录
   finish = () => {
-    Login().then(res => {
-
+    const {username, password, code } = this.state
+    const params = {
+      username,
+      password: CryptoJS.MD5(password).toString(),
+      code
+    }
+    this.setState({
+      loading: true
+    })
+    console.log(params)
+    Login(params).then(res => {
+      if (res.data.resCode === 0) {
+        this.setState({
+          loading: false
+        })
+        message.success('success')
+      }
     }).catch(error => {
-      alert()
+      this.setState({
+        loading: false
+      })
     })
   }
 
@@ -26,12 +49,24 @@ class LoginForm extends Component {
     })
   }
 
+  passwordChange = (e) => {
+    this.setState({
+      password: e.target.value
+    })
+  }
+
+  codeChange = (e) => {
+    this.setState({
+      code: e.target.value
+    })
+  }
+
   toggleType(){
     this.props.switchType('register')
   }
 
   render() { 
-    const { username } = this.state
+    const { username, module, password, code, loading } = this.state
     const _this = this
     return (
       <div className="container">
@@ -71,7 +106,7 @@ class LoginForm extends Component {
             { required: true, message: '密码不能为空'},
             { pattern: VALIDATOR_PASSWORD, message: '请输入大于6位小于20位的数字+密码'}
           ]}>
-            <Input.Password prefix={<ShoppingOutlined />} placeholder="Password"/>
+            <Input.Password  value={password} onChange={this.passwordChange} prefix={<ShoppingOutlined />} placeholder="Password"/>
           </Form.Item>
 
           <Form.Item  name="code" rules={[
@@ -80,16 +115,16 @@ class LoginForm extends Component {
           ]}>
              <Row gutter={16}>
               <Col span={15}>
-                <Input prefix={<UnlockOutlined />} placeholder="Code"/>
+                <Input value={code} onChange={this.codeChange} prefix={<UnlockOutlined />} placeholder="请输入验证码"/>
               </Col>
               <Col span={9}>
-                <Code username={username}/>
+                <Code username={username} module={module}/>
               </Col>
             </Row>
           </Form.Item>
 
           <Form.Item>
-            <Button type="primary" htmlType="submit" block>登录</Button>
+            <Button type="primary" htmlType="submit" loading={loading} block>登录</Button>
           </Form.Item>
         </Form>
       </div>

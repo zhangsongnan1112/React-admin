@@ -11,7 +11,8 @@ class Coder extends Component {
       username: '',
       codeLoading: false,
       codeDisabled: false,
-      codeText: '获取验证码'
+      codeText: '获取验证码',
+      module: props.module
     }
   }
 
@@ -19,7 +20,6 @@ class Coder extends Component {
     this.setState({
       username
     })
-    console.log(username)
   }
 
   componentWillUnmount() {
@@ -28,7 +28,7 @@ class Coder extends Component {
 
   // 获取验证码
   getCode = () => {
-    const { username } = this.state
+    const { username, module } = this.state
     if (!username) {
       message.warning('用户名不能为空')
       return  false
@@ -43,9 +43,10 @@ class Coder extends Component {
     })
     const params = {
       username,
-      module: 'login'
+      module: module
     }
     getCode(params).then(res => {
+      message.success(res.data.message)
       this.countDown()
     }).catch(error => {
       this.setState({

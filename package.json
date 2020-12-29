@@ -96,6 +96,7 @@
     ]
   },
   "devDependencies": {
+    "crypto-js": "^4.0.0",
     "react-router-dom": "^5.2.0",
     "sass-loader": "^10.1.0",
     "sass-resources-loader": "^2.1.1"
