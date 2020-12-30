@@ -1,3 +1,11 @@
 
-$color: #ddd;
-$fs12: 112px;
+$bgColor:#123250;
+$fs12: 12px;
+
+@mixin webkit($name, $value) {
+  -Webkit-#{$name}: $value;
+  -Moz-#{$name}: $value;
+  -ms-#{$name}: $value;
+  -o-#{$name}: $value;
+  #{$name}: $value;
+}

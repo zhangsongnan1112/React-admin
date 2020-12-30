@@ -4,6 +4,7 @@ import { UserOutlined, ShoppingOutlined, UnlockOutlined } from '@ant-design/icon
 import { VALIDATOR_PASSWORD }  from '../../utils/validator'
 import { Login } from '../../api/account'
 import Code from "../../component/Coder"
+import { withRouter } from 'react-router-dom'
 // 密码加密
 import CryptoJS from 'crypto-js'
 class LoginForm extends Component {
@@ -28,13 +29,13 @@ class LoginForm extends Component {
     this.setState({
       loading: true
     })
-    console.log(params)
     Login(params).then(res => {
       if (res.data.resCode === 0) {
         this.setState({
           loading: false
         })
         message.success('success')
+        this.props.history.push('/index')
       }
     }).catch(error => {
       this.setState({
@@ -67,7 +68,6 @@ class LoginForm extends Component {
 
   render() { 
     const { username, module, password, code, loading } = this.state
-    const _this = this
     return (
       <div className="container">
         <div className="form-header">
@@ -132,4 +132,4 @@ class LoginForm extends Component {
   }
 }
  
-export default LoginForm;
+export default withRouter(LoginForm);
