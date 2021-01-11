@@ -35,24 +35,39 @@ class ASider extends Component {
     )
   }
 
+  subClick = ({ key, keyPath }) => {
+    console.log({ key, keyPath })
+    this.selectMenuHigh({
+      selectedKeys: key,
+      openKeys: keyPath[keyPath.length-1]
+    })
+  }
+
   componentDidMount() {
     console.log(this.props)
     const pathname = this.props.history.location.pathname
     const nameArr = pathname.split('/')
     const fullname = nameArr.slice(0,nameArr.length-1).join('/')
-    this.setState({
-      selectedKeys: [pathname],
-      openKeys: [fullname]
+    this.selectMenuHigh({
+      selectedKeys: pathname,
+      openKeys: fullname
     })
   }
 
-  subClick = ({ key, keyPath }) => {
+  selectMenuHigh = ({selectedKeys, openKeys}) => {
     this.setState({
-      selectedKeys: [key],
-      openKeys: [keyPath[keyPath.length-1]]
+      selectedKeys: [selectedKeys],
+      openKeys: [openKeys]
     })
-
   }
+
+  OpenChange = (openKeys) => {
+    this.setState({
+      openKeys: [openKeys[openKeys.length-1]]
+    })
+  }
+
+
 
   render() { 
     const { selectedKeys, openKeys } = this.state
@@ -66,6 +81,7 @@ class ASider extends Component {
           openKeys={openKeys}
           style={{ height: 'auto', borderRight: 0 }}
           onClick = {this.subClick}
+          onOpenChange = {this.OpenChange}
         >
           {
             router && router.map(firstItem => 
