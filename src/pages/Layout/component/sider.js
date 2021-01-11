@@ -1,6 +1,6 @@
 import React, { Component, Fragment } from 'react';
 import { Menu } from 'antd';
-import { Link } from 'react-router-dom'
+import { Link, withRouter } from 'react-router-dom'
 import './sider.scss'
 import router from '../../../router/router'
 console.log(router)
@@ -8,7 +8,10 @@ const { SubMenu } = Menu;
 class ASider extends Component {
   constructor(props) {
     super(props);
-    this.state = {  }
+    this.state = {
+      selectedKeys: [],
+      openKeys: []
+    }
   }
   renderMenu = (value) => {
     return (
@@ -31,16 +34,38 @@ class ASider extends Component {
       </SubMenu>
     )
   }
+
+  componentDidMount() {
+    console.log(this.props)
+    const pathname = this.props.history.location.pathname
+    const nameArr = pathname.split('/')
+    const fullname = nameArr.slice(0,nameArr.length-1).join('/')
+    this.setState({
+      selectedKeys: [pathname],
+      openKeys: [fullname]
+    })
+  }
+
+  subClick = ({ key, keyPath }) => {
+    this.setState({
+      selectedKeys: [key],
+      openKeys: [keyPath[keyPath.length-1]]
+    })
+
+  }
+
   render() { 
+    const { selectedKeys, openKeys } = this.state
     return (
       <Fragment>
         <h1 className="logo"><span>Logo</span></h1>
         <Menu
           theme="dark"
           mode="inline"
-          defaultSelectedKeys={['1']}
-          defaultOpenKeys={['sub1']}
+          selectedKeys={selectedKeys}
+          openKeys={openKeys}
           style={{ height: 'auto', borderRight: 0 }}
+          onClick = {this.subClick}
         >
           {
             router && router.map(firstItem => 
@@ -55,4 +80,4 @@ class ASider extends Component {
   }
 }
  
-export default ASider;
+export default withRouter(ASider);
