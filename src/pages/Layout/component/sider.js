@@ -3,19 +3,22 @@ import { Menu } from 'antd';
 import { Link, withRouter } from 'react-router-dom'
 import './sider.scss'
 import router from '../../../router/router'
-console.log(router)
+import {
+  AppstoreOutlined,
+} from '@ant-design/icons';
 const { SubMenu } = Menu;
 class ASider extends Component {
   constructor(props) {
     super(props);
     this.state = {
       selectedKeys: [],
-      openKeys: []
+      openKeys: [],
+      collapsed: false,
     }
   }
   renderMenu = (value) => {
     return (
-      <Menu.Item key={value.path}>
+    <Menu.Item key={value.path}>
         <Link to={value.path}>{value.tilte}</Link>
       </Menu.Item>
     )
@@ -23,7 +26,7 @@ class ASider extends Component {
 
   renderSubMenu = (value) => {
     return (
-      <SubMenu key={value.path} title={value.tilte}>
+      <SubMenu key={value.path} title={value.tilte}  icon={<AppstoreOutlined />}>
         {
           value.children.map(item => {
             return  item.children && item.children.length > 0
@@ -66,8 +69,6 @@ class ASider extends Component {
       openKeys: [openKeys[openKeys.length-1]]
     })
   }
-
-
 
   render() { 
     const { selectedKeys, openKeys } = this.state

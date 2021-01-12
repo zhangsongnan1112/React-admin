@@ -8,14 +8,24 @@ const { Header, Footer, Sider, Content } = Layout;
 class LayoutMain extends Component {
   constructor(props) {
     super(props);
-    this.state = {  }
+    this.state = {
+      collapsed: true
+    }
   }
-  render() { 
+
+  toggleCollapsed = () => {
+    this.setState({
+      collapsed: !this.state.collapsed
+    })
+  }
+
+  render() {
+    const { collapsed } = this.state
     return ( 
       <Layout className="layout-wrap">
-        <Sider width="250px"><ASider/></Sider>
+        <Sider width="250px"  collapsed={collapsed}><ASider/></Sider>
         <Layout>
-          <Header className="header-wrap"><HeaderWrap/></Header>
+          <Header className="header-wrap"><HeaderWrap headerCollapsed={collapsed} toggleCollapsed={this.toggleCollapsed}/></Header>
           <Content className="content-warp"><MainContent/></Content>
           <Footer>Footer</Footer>
         </Layout>
