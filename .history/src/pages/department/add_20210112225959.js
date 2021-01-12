@@ -20,12 +20,12 @@ class DepartAdd extends Component {
     this.setState({
       loading: true
     })
-    addDepartment(values).then(res => {
+    addDepartment(values).then(
       message.info('添加成功')
       this.setState({
         loading: false
       })
-    })
+    )
   }
   render() {
     const { layout, loading } = this.state

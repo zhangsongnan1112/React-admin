@@ -5,7 +5,7 @@ import { VALIDATOR_PASSWORD }  from '../../utils/validator'
 import { Login } from '../../api/account'
 import Code from "../../component/Coder"
 import { withRouter } from 'react-router-dom'
-import { setToken } from '../../utils/cookie'
+import { setToken } from '../../utils/token'
 // 密码加密
 import CryptoJS from 'crypto-js'
 class LoginForm extends Component {

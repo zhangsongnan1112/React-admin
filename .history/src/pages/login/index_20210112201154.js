@@ -1,7 +1,7 @@
 import React, { Component, Fragment } from 'react';
 import './login.scss'
 import LoginForm from './LoginForm.js'
-import RegisterForm from './RegisterForm.js'
+import RegisterForm from './registerForm.js'
 class Login extends Component {
   constructor(props) {
     super(props);

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import { Form, Input, Button, InputNumber, Radio, message } from 'antd';
-import { addDepartment } from '../../api/department'
+import { Form, Input, Button, InputNumber, Radio } from 'antd';
+
 class DepartAdd extends Component {
   constructor(props) {
     super(props);
@@ -8,27 +8,15 @@ class DepartAdd extends Component {
       layout: {
         labelCol: { span: 2 },
         wrapperCol: { span: 16 },
-      },
-      loading: false 
+      }   
     }
   }
   onFinish = (values) => {
-    if(!values.username) {
-      message.info('请输入部门名称')
-      return false
-    }
-    this.setState({
-      loading: true
-    })
-    addDepartment(values).then(res => {
-      message.info('添加成功')
-      this.setState({
-        loading: false
-      })
-    })
+    // console.log(values)
+    alert()
   }
   render() {
-    const { layout, loading } = this.state
+    const { layout } = this.state
     return (
       <Form 
         { ...layout } 
@@ -63,7 +51,7 @@ class DepartAdd extends Component {
           <Input.TextArea />
         </Form.Item>
         <Form.Item>
-          <Button loading={loading} type="primary" htmlType="submit" style={{marginLeft: '40px'}}>确认添加</Button>
+          <Button type="primary" htmlType="submit" style={{marginLeft: '40px'}}>确认添加</Button>
         </Form.Item>
       </Form>
     );

@@ -18,6 +18,7 @@ moduleFiles.keys().forEach(item => {
     }
   ) 
 })
+console.log(components)
 
 class MainContent extends Component {
   constructor(props) {
