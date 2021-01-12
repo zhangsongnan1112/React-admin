@@ -5,6 +5,23 @@ const router = [
     path: '/'
   },
   {
+    tilte: '部门',
+    icon: '',
+    path: '/department',
+    children: [
+      {
+        tilte: '部门列表',
+        icon: '',
+        path: '/department/list'
+      },
+      {
+        tilte: '添加部门户',
+        icon: '',
+        path: '/department/add'
+      }
+    ]
+  },
+  {
     tilte: '用户管理',
     icon: '',
     path: '/user',

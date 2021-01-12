@@ -1,8 +1,25 @@
 import React, { Component } from 'react';
 import { Switch } from 'react-router-dom'
 import PrivateRouter from '../../../component/PrivateRouter'
-import AddUser from '../../User/addUser'
-import UserNavigation from '../../User/navigation'
+
+// 自动化引入
+
+const moduleFiles = require.context('../../', true, /\.js$/)
+
+const components = []
+moduleFiles.keys().forEach(item => {
+  if (item.includes('/Layout') || item.includes('/login') ) {
+    return false
+  }
+  components.push(
+    {
+      path: item.split('.')[1],
+      component: moduleFiles(item).default
+    }
+  ) 
+})
+console.log(components)
+
 class MainContent extends Component {
   constructor(props) {
     super(props);
@@ -11,8 +28,13 @@ class MainContent extends Component {
   render() { 
     return (
       <Switch> 
-        <PrivateRouter exact component={AddUser} path='/user/add'></PrivateRouter>
-        <PrivateRouter exact component={UserNavigation} path='/user/navigation'></PrivateRouter>
+        {
+          components.map(item => {
+            return (
+              <PrivateRouter exact key={item.path} component={item.component} path={item.path}></PrivateRouter>
+            )
+          })
+        }
       </Switch>
     )
   }
