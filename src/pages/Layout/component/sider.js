@@ -39,7 +39,6 @@ class ASider extends Component {
   }
 
   subClick = ({ key, keyPath }) => {
-    console.log({ key, keyPath })
     this.selectMenuHigh({
       selectedKeys: key,
       openKeys: keyPath[keyPath.length-1]
@@ -47,7 +46,6 @@ class ASider extends Component {
   }
 
   componentDidMount() {
-    console.log(this.props)
     const pathname = this.props.history.location.pathname
     const nameArr = pathname.split('/')
     const fullname = nameArr.slice(0,nameArr.length-1).join('/')

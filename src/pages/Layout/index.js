@@ -9,14 +9,23 @@ class LayoutMain extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      collapsed: true
+      collapsed: false
     }
   }
 
-  toggleCollapsed = () => {
+  componentDidMount() {
+    const collapsed = JSON.parse(sessionStorage.getItem('collapsed'))
     this.setState({
-      collapsed: !this.state.collapsed
+      collapsed
     })
+  }
+
+  toggleCollapsed = () => {
+    const collapsed = !this.state.collapsed
+    this.setState({
+      collapsed
+    })
+    sessionStorage.setItem('collapsed', collapsed)
   }
 
   render() {
