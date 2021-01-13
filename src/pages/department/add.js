@@ -13,15 +13,29 @@ class DepartAdd extends Component {
     }
   }
   onFinish = (values) => {
-    if(!values.username) {
+    if(!values.name) {
       message.info('请输入部门名称')
+      return false
+    }
+
+    if (!values.content) {
+      message.info('请输入部门描述')
       return false
     }
     this.setState({
       loading: true
     })
     addDepartment(values).then(res => {
-      message.info('添加成功')
+      console.log(res)
+      if (res.data.resCode === 0) {
+        message.info('添加成功')
+        this.form.resetFields()
+        this.setState({
+          loading: false
+        })
+      }
+    })
+    .catch(error => {
       this.setState({
         loading: false
       })
@@ -30,14 +44,15 @@ class DepartAdd extends Component {
   render() {
     const { layout, loading } = this.state
     return (
-      <Form 
+      <Form
+        ref={form => {this.form = form}}
         { ...layout } 
-        initialValues={{number:0, stutas:true}}
+        initialValues={{number:1, status:true}}
         onFinish={this.onFinish}
       >
         <Form.Item
           label="部门名称"
-          name="username"
+          name="name"
         >
           <Input />
         </Form.Item>
@@ -45,11 +60,11 @@ class DepartAdd extends Component {
           label="部门人数"
           name="number"
         >
-          <InputNumber min={0} />
+          <InputNumber min={1} />
         </Form.Item>
         <Form.Item
           label="部门状态"
-          name="stutas"
+          name="status"
         >
           <Radio.Group>
             <Radio value={true}>启用</Radio>
@@ -58,7 +73,7 @@ class DepartAdd extends Component {
         </Form.Item>
         <Form.Item
           label="部门描述"
-          name="descript"
+          name="content"
         >
           <Input.TextArea />
         </Form.Item>

@@ -5,7 +5,7 @@ import { VALIDATOR_PASSWORD }  from '../../utils/validator'
 import { Login } from '../../api/account'
 import Code from "../../component/Coder"
 import { withRouter } from 'react-router-dom'
-import { setToken } from '../../utils/cookie'
+import { setToken, setUsername } from '../../utils/cookie'
 // 密码加密
 import CryptoJS from 'crypto-js'
 class LoginForm extends Component {
@@ -34,6 +34,7 @@ class LoginForm extends Component {
       const data = res.data
       if (data.resCode === 0) {
         setToken(data.data.token)
+        setUsername(data.data.username)
         this.setState({
           loading: false
         })
