@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Form, Input, Button, InputNumber, Radio, message } from 'antd';
-import { addDepartment } from '../../api/department'
+import { addDepartment } from '@api/department'
 class DepartAdd extends Component {
   constructor(props) {
     super(props);

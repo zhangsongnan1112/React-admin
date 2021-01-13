@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Switch } from 'react-router-dom'
-import PrivateRouter from '../../../component/PrivateRouter'
+import PrivateRouter from '@c/PrivateRouter'
 
 // 自动化引入
 

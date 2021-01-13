@@ -1,9 +1,14 @@
 import React, { Component, Fragment } from 'react';
-import { Form, Input, Button,  message, Table } from 'antd';
+import { Form, Input, Button,  message, Table, Switch  } from 'antd';
+import { departmentList, departmentDelete } from '@api/department'
 class DepartLIst extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      name: '',
+      pageNumber: 1,
+      pageSize: 10,
+      total: 0,
       columns: [
         {
           title: '部门',
@@ -19,11 +24,25 @@ class DepartLIst extends Component {
           title: '状态',
           dataIndex: 'status',
           key: 'status',
+          render: (text, record, index) => {
+            return (
+              <Switch checkedChildren="开启" unCheckedChildren="禁用" defaultChecked={record.status ==='1'? true: false} />
+            )
+          }
         },
         {
           title: '操作',
+          width: 200,
           dataIndex: 'address',
           key: 'address',
+          render: (text, data) => {
+            return (
+              <div>
+                <Button type = "primary"> 操作</Button>
+                <Button style={{marginLeft: '20px'}} onClick={() => this.deleteList(data.id)}>删除</Button>
+              </div>
+            )
+          }
         },
       ],
       dataSource: []
@@ -31,11 +50,56 @@ class DepartLIst extends Component {
     }
   }
   submitForm = (value) => {
-    console.log(value)
+    this.setState({
+      pageNumber: 1,
+      pageSize: 10,
+      name: value.name
+    })
+    this.getList()
+  }
+
+  componentDidMount() {
+    this.getList()
+  }
+
+  getList = () => {
+    const { name, pageNumber, pageSize } = this.state
+    const prams = {
+      pageNumber,
+      pageSize
+    }
+    if (name) {
+      prams.name = name
+    }
+    departmentList(prams).then(res => {
+      const data = res.data
+      if (data.resCode === 0) {
+        this.setState({
+          dataSource: data.data.data,
+          total: data.data.total
+        })
+      }
+    })
+  }
+
+  deleteList = (id) => {
+    departmentDelete({id}).then(res => {
+      if (res.data.resCode === 0) {
+      }
+      message.info(res.data.message)
+      this.getList()
+    })
+  }
+
+  onSelctChange = (selectedRowKeys, selectedRows) => {
+    console.log(selectedRowKeys, selectedRows)
   }
 
   render() {
     const { columns, dataSource } = this.state
+    const rowSelection = {
+      onChange: this.onSelctChange
+    }
     return (
       <Fragment>
         <Form  layout="inline" onFinish={this.submitForm} style={{marginBottom: '40px'}}>
@@ -48,7 +112,7 @@ class DepartLIst extends Component {
             </Button>
           </Form.Item>
         </Form>
-        <Table dataSource={dataSource} columns={columns} />
+        <Table rowKey="id" dataSource={dataSource} columns={columns}  rowSelection={{ ...rowSelection }} />
       </Fragment>
     );
   }

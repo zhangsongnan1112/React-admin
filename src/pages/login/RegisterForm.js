@@ -2,9 +2,9 @@
 import React, { Component } from 'react';
 import { Form, Input, Button, Row, Col, message } from 'antd';
 import { UserOutlined, ShoppingOutlined, UnlockOutlined } from '@ant-design/icons';
-import Code from "../../component/Coder"
-import { Register } from '../../api/account'
-import { VALIDATOR_PASSWORD }  from '../../utils/validator'
+import Code from "@c/Coder"
+import { Register } from '@api/account'
+import { VALIDATOR_PASSWORD }  from '@/utils/validator'
 // 密码加密
 import CryptoJS from 'crypto-js'
 class RegisterForm extends Component {

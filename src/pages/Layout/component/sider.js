@@ -2,7 +2,7 @@ import React, { Component, Fragment } from 'react';
 import { Menu } from 'antd';
 import { Link, withRouter } from 'react-router-dom'
 import './sider.scss'
-import router from '../../../router/router'
+import router from '@/router/router'
 import {
   AppstoreOutlined,
 } from '@ant-design/icons';

@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
 import { Form, Input, Button, Row, Col, message } from 'antd';
 import { UserOutlined, ShoppingOutlined, UnlockOutlined } from '@ant-design/icons';
-import { VALIDATOR_PASSWORD }  from '../../utils/validator'
-import { Login } from '../../api/account'
-import Code from "../../component/Coder"
+import { VALIDATOR_PASSWORD }  from '@/utils/validator'
+import { Login } from '@api/account'
+import Code from "@c/Coder"
 import { withRouter } from 'react-router-dom'
-import { setToken, setUsername } from '../../utils/cookie'
+import { setToken, setUsername } from '@/utils/cookie'
 // 密码加密
 import CryptoJS from 'crypto-js'
 class LoginForm extends Component {
