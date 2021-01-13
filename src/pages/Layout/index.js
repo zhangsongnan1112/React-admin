@@ -35,7 +35,7 @@ class LayoutMain extends Component {
         <Sider width="250px"  collapsed={collapsed}><ASider/></Sider>
         <Layout>
           <Header className="header-wrap"><HeaderWrap headerCollapsed={collapsed} toggleCollapsed={this.toggleCollapsed}/></Header>
-          <Content className="content-warp"><MainContent/></Content>
+          <Content style={{minHeight: "auto"}} className="content-warp"><MainContent/></Content>
           <Footer>Footer</Footer>
         </Layout>
       </Layout>
