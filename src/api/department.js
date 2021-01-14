@@ -39,3 +39,28 @@ export function departmentDelete(data) {
   })
 }
 
+export function departmentStatus(data) {
+  return service.request({
+    url: '/department/status/',
+    method: 'post',
+    data
+  })
+}
+// 详情
+export function departmentDetail(data) {
+  return service.request({
+    url: '/department/detailed/',
+    method: 'post',
+    data
+  })
+}
+
+// 编辑
+export function departmentEdit(data) {
+  return service.request({
+    url: '/department/edit/',
+    method: 'post',
+    data
+  })
+}
+

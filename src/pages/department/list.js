@@ -1,6 +1,7 @@
 import React, { Component, Fragment } from 'react';
 import { Form, Input, Button,  message, Table, Switch, Modal  } from 'antd';
-import { departmentList, departmentDelete } from '@api/department'
+import { departmentList, departmentDelete, departmentStatus } from '@api/department'
+import { withRouter } from 'react-router-dom'
 class DepartLIst extends Component {
   constructor(props) {
     super(props);
@@ -26,7 +27,7 @@ class DepartLIst extends Component {
           key: 'status',
           render: (text, record, index) => {
             return (
-              <Switch checkedChildren="开启" unCheckedChildren="禁用" defaultChecked={record.status ==='1'? true: false} />
+              <Switch onChange={() => this.handlerChange(record)} checkedChildren="开启" unCheckedChildren="禁用" defaultChecked={record.status ==='1'? true: false} />
             )
           }
         },
@@ -38,7 +39,8 @@ class DepartLIst extends Component {
           render: (text, data) => {
             return (
               <div>
-                <Button type = "primary"> 操作</Button>
+                <Button Button type = "primary" onClick = {() => {this.props.history.push('/department/add/?id=' + data.id)}} >编辑
+                </Button>
                 <Button style={{marginLeft: '20px'}} onClick={() => {this.openModel(data.id)}}>删除</Button>
               </div>
             )
@@ -83,13 +85,16 @@ class DepartLIst extends Component {
     })
   }
 
-  openModel = (id) => {
-    console.log(id,9999)
+  openModel(id) {
     this.setState({
       isModalVisible: true,
       id
     })
   }
+
+  // handlerEdit(id) {
+  //   this.props.history.push({pathname: '/department/add/', state: id})
+  // }
 
   onSelctChange = (selectedRowKeys, selectedRows) => {
     console.log(selectedRowKeys, selectedRows)
@@ -112,6 +117,23 @@ class DepartLIst extends Component {
   handleCancel = () => {
     this.setState({
       isModalVisible: false
+    })
+  }
+
+  // switch 启用 禁用按钮
+  handlerChange(data) {
+    console.log(data)
+    if (!data.status) return false
+    const params = {
+      id: data.id,
+      statue: data.status === '1' ? false : true
+    }
+    departmentStatus(params).then(res => {
+      if (res.data.resCode === 0) {
+        message.info('修改成功')
+      } else {
+        message.info(res.data.message)
+      }
     })
   }
 
@@ -141,4 +163,4 @@ class DepartLIst extends Component {
   }
 }
  
-export default DepartLIst;
+export default withRouter(DepartLIst);
