@@ -1,5 +1,5 @@
 import React, { Component, Fragment } from 'react';
-import { Form, Input, Button,  message, Table, Switch  } from 'antd';
+import { Form, Input, Button,  message, Table, Switch, Modal  } from 'antd';
 import { departmentList, departmentDelete } from '@api/department'
 class DepartLIst extends Component {
   constructor(props) {
@@ -39,14 +39,15 @@ class DepartLIst extends Component {
             return (
               <div>
                 <Button type = "primary"> 操作</Button>
-                <Button style={{marginLeft: '20px'}} onClick={() => this.deleteList(data.id)}>删除</Button>
+                <Button style={{marginLeft: '20px'}} onClick={() => {this.openModel(data.id)}}>删除</Button>
               </div>
             )
           }
         },
       ],
-      dataSource: []
-
+      dataSource: [],
+      isModalVisible: false,
+      id: ''
     }
   }
   submitForm = (value) => {
@@ -82,12 +83,11 @@ class DepartLIst extends Component {
     })
   }
 
-  deleteList = (id) => {
-    departmentDelete({id}).then(res => {
-      if (res.data.resCode === 0) {
-      }
-      message.info(res.data.message)
-      this.getList()
+  openModel = (id) => {
+    console.log(id,9999)
+    this.setState({
+      isModalVisible: true,
+      id
     })
   }
 
@@ -95,8 +95,28 @@ class DepartLIst extends Component {
     console.log(selectedRowKeys, selectedRows)
   }
 
+  handleOk = () => {
+    const { id } = this.state
+    departmentDelete({id}).then(res => {
+      if (res.data.resCode === 0) {
+        this.setState({
+          isModalVisible: false,
+          id: ''
+        })
+      }
+      message.info(res.data.message)
+      this.getList()
+    })
+  }
+
+  handleCancel = () => {
+    this.setState({
+      isModalVisible: false
+    })
+  }
+
   render() {
-    const { columns, dataSource } = this.state
+    const { columns, dataSource, isModalVisible } = this.state
     const rowSelection = {
       onChange: this.onSelctChange
     }
@@ -113,6 +133,9 @@ class DepartLIst extends Component {
           </Form.Item>
         </Form>
         <Table rowKey="id" dataSource={dataSource} columns={columns}  rowSelection={{ ...rowSelection }} />
+        <Modal title="提示" visible={isModalVisible} onOk={this.handleOk} onCancel={this.handleCancel} cancelText="取消">
+          <p>确定删除么？<strong style={{color: 'red'}}>删除后将不可恢复</strong></p>
+        </Modal>
       </Fragment>
     );
   }
