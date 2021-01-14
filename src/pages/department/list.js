@@ -1,7 +1,7 @@
 import React, { Component, Fragment } from 'react';
 import { Form, Input, Button,  message, Table, Switch, Modal  } from 'antd';
 import { departmentList, departmentDelete, departmentStatus } from '@api/department'
-import { withRouter } from 'react-router-dom'
+import { withRouter, Link } from 'react-router-dom'
 class DepartLIst extends Component {
   constructor(props) {
     super(props);
@@ -41,7 +41,10 @@ class DepartLIst extends Component {
           render: (text, data) => {
             return (
               <div>
-                <Button type = "primary" onClick = {() => {this.props.history.push('/department/add/?id=' + data.id)}} >编辑</Button>
+                <Button type = "primary">
+                  <Link to={{pathname:'/department/add', state: {id: data.id}}}>编辑</Link>
+                </Button>
+                {/* <Button type = "primary" onClick = {() => {this.props.history.push('/department/add/?id=' + data.id)}} >编辑</Button> */}
                 <Button style={{marginLeft: '20px'}} onClick={() => {this.setState({isModalVisible: true,id: data.id})}}>删除</Button>
               </div>
             )

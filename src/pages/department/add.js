@@ -9,7 +9,7 @@ class DepartAdd extends Component {
         labelCol: { span: 2 },
         wrapperCol: { span: 16 },
       },
-      id: this.props.location.search.slice(4),
+      id: this.props.location.state ? this.props.location.state.id : '',
       loading: false 
     }
   }
