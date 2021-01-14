@@ -15,7 +15,7 @@ const router = [
         path: '/department/list'
       },
       {
-        tilte: '添加部门户',
+        tilte: '添加部门',
         icon: '',
         path: '/department/add'
       }

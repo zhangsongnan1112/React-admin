@@ -7,9 +7,11 @@ class DepartLIst extends Component {
     super(props);
     this.state = {
       name: '',
+      tableLoading: false,
       pageNumber: 1,
       pageSize: 10,
       total: 0,
+      switchId: '',
       columns: [
         {
           title: '部门',
@@ -27,7 +29,7 @@ class DepartLIst extends Component {
           key: 'status',
           render: (text, record, index) => {
             return (
-              <Switch onChange={() => this.handlerChange(record)} checkedChildren="开启" unCheckedChildren="禁用" defaultChecked={record.status ==='1'? true: false} />
+              <Switch onChange={() => this.handlerChange(record)} loading={this.state.switchId === record.id} checkedChildren="开启" unCheckedChildren="禁用" defaultChecked={record.status ==='1'? true: false} />
             )
           }
         },
@@ -39,9 +41,8 @@ class DepartLIst extends Component {
           render: (text, data) => {
             return (
               <div>
-                <Button Button type = "primary" onClick = {() => {this.props.history.push('/department/add/?id=' + data.id)}} >编辑
-                </Button>
-                <Button style={{marginLeft: '20px'}} onClick={() => {this.openModel(data.id)}}>删除</Button>
+                <Button type = "primary" onClick = {() => {this.props.history.push('/department/add/?id=' + data.id)}} >编辑</Button>
+                <Button style={{marginLeft: '20px'}} onClick={() => {this.setState({isModalVisible: true,id: data.id})}}>删除</Button>
               </div>
             )
           }
@@ -49,10 +50,12 @@ class DepartLIst extends Component {
       ],
       dataSource: [],
       isModalVisible: false,
-      id: ''
+      id: '',
+      selectedRowKeys: []
     }
   }
   submitForm = (value) => {
+    if (this.state.tableLoading === true) return false
     this.setState({
       pageNumber: 1,
       pageSize: 10,
@@ -74,34 +77,26 @@ class DepartLIst extends Component {
     if (name) {
       prams.name = name
     }
+    this.setState({tableLoading: true})
     departmentList(prams).then(res => {
       const data = res.data
       if (data.resCode === 0) {
         this.setState({
           dataSource: data.data.data,
-          total: data.data.total
+          total: data.data.total,
+          tableLoading: false
         })
       }
+    }).catch(error => {
+      this.setState({tableLoading: false})
     })
   }
 
-  openModel(id) {
-    this.setState({
-      isModalVisible: true,
-      id
-    })
+  onSelctChange = (selectedRowKeys) => {
+    this.setState({selectedRowKeys})
   }
 
-  // handlerEdit(id) {
-  //   this.props.history.push({pathname: '/department/add/', state: id})
-  // }
-
-  onSelctChange = (selectedRowKeys, selectedRows) => {
-    console.log(selectedRowKeys, selectedRows)
-  }
-
-  handleOk = () => {
-    const { id } = this.state
+  deleteList = (id) => {
     departmentDelete({id}).then(res => {
       if (res.data.resCode === 0) {
         this.setState({
@@ -114,6 +109,11 @@ class DepartLIst extends Component {
     })
   }
 
+  handleOk = () => {
+    const { id } = this.state
+    this.deleteList(id)
+  }
+
   handleCancel = () => {
     this.setState({
       isModalVisible: false
@@ -122,24 +122,38 @@ class DepartLIst extends Component {
 
   // switch 启用 禁用按钮
   handlerChange(data) {
-    console.log(data)
     if (!data.status) return false
+    this.setState({switchId: data.id})
     const params = {
       id: data.id,
       statue: data.status === '1' ? false : true
     }
     departmentStatus(params).then(res => {
+      this.setState({
+        switchId: ''
+      })
       if (res.data.resCode === 0) {
         message.info('修改成功')
       } else {
         message.info(res.data.message)
       }
+    }).catch(error => {
+      this.setState({
+        switchId: ''
+      })
     })
   }
 
+  batchDelete = () => {
+    if (this.state.selectedRowKeys.length === 0) return 
+    const id = this.state.selectedRowKeys.join()
+    this.deleteList(id)
+  }
+
   render() {
-    const { columns, dataSource, isModalVisible } = this.state
+    const { columns, dataSource, isModalVisible, tableLoading, selectedRowKeys } = this.state
     const rowSelection = {
+      selectedRowKeys,
       onChange: this.onSelctChange
     }
     return (
@@ -154,7 +168,8 @@ class DepartLIst extends Component {
             </Button>
           </Form.Item>
         </Form>
-        <Table rowKey="id" dataSource={dataSource} columns={columns}  rowSelection={{ ...rowSelection }} />
+        <Table loading={tableLoading} rowKey="id" dataSource={dataSource} columns={columns}  rowSelection={{ ...rowSelection }} />
+        <Button onClick={this.batchDelete}>批量删除</Button>
         <Modal title="提示" visible={isModalVisible} onOk={this.handleOk} onCancel={this.handleCancel} cancelText="取消">
           <p>确定删除么？<strong style={{color: 'red'}}>删除后将不可恢复</strong></p>
         </Modal>
