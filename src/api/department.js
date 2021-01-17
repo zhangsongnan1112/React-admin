@@ -23,21 +23,29 @@ export function addDepartment(data) {
   })
 }
 
-export function departmentList(data) {
+export function commonApi(data) {
   return service.request({
-    url: '/department/list/',
-    method: 'post',
-    data
+    url: data.url,
+    method: data.method || 'post',
+    data: data.data
   })
 }
 
-export function departmentDelete(data) {
-  return service.request({
-    url: '/department/delete/',
-    method: 'post',
-    data
-  })
-}
+// export function departmentList(data) {
+//   return service.request({
+//     url: '/department/list/',
+//     method: 'post',
+//     data
+//   })
+// }
+
+// export function departmentDelete(data) {
+//   return service.request({
+//     url: '/department/delete/',
+//     method: 'post',
+//     data
+//   })
+// }
 
 export function departmentStatus(data) {
   return service.request({
