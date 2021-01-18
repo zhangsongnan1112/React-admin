@@ -24,16 +24,14 @@ class TableList extends Component {
     this.props.onRef(this)
   }
 
-  getList = () => {
-    const { name, pageNumber, pageSize } = this.state
-    if (name) {
-      prams.name = name
-    }
+  getList = (params) => {
+    const { pageNumber, pageSize } = this.state
     const requestData = {
       url: requestUrl[this.props.config.url],
       data: {
         pageNumber,
-        pageSize
+        pageSize,
+        ...params
       }
     }
     this.setState({tableLoading: true})

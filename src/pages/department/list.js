@@ -7,7 +7,6 @@ class DepartLIst extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      name: '',
       switchId: '',
       config: {
         url: 'departentList',
@@ -53,13 +52,7 @@ class DepartLIst extends Component {
     }
   }
   submitForm = (value) => {
-    // if (this.state.tableLoading === true) return false
-    this.setState({
-      pageNumber: 1,
-      pageSize: 10,
-      name: value.name
-    })
-    // this.getList()
+    this.TableList.getList({name: value.name})
   }
 
   // switch 启用 禁用按钮
@@ -97,7 +90,6 @@ class DepartLIst extends Component {
   render() {
     return (
       <Fragment>
-        <TableList config={this.state.config} batchShow={true} onRef={this.getChildRef}></TableList>
         <Form  layout="inline" onFinish={this.submitForm} style={{marginBottom: '40px'}}>
           <Form.Item label="部门名称" name="name">
             <Input placeholder="请输入用户名"/>
@@ -108,6 +100,7 @@ class DepartLIst extends Component {
             </Button>
           </Form.Item>
         </Form>
+        <TableList config={this.state.config} batchShow={true} onRef={this.getChildRef}></TableList>
       </Fragment>
     );
   }
