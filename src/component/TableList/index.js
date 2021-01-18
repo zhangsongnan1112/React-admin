@@ -1,8 +1,9 @@
 import React, { Component, Fragment } from 'react';
-import { Form, Input, Button,  message, Table, Pagination, Row, Col, Modal  } from 'antd';
+import { Form, Input, message, Modal  } from 'antd';
 import { commonApi } from '@api/department'
 import PropTypes from 'prop-types';
 import requestUrl from '@api/requestUrl'
+import TableUi from './tableUi'
 class TableList extends Component {
   constructor(props) {
     super(props);
@@ -119,28 +120,23 @@ class TableList extends Component {
 
   render() {
     const { tabHeader, checkBox, rowKey } = this.props.config
-    const { dataSource, tableLoading, selectedRowKeys, total, isModalVisible } =this.state
+    const { dataSource, tableLoading, total, isModalVisible } =this.state
     const rowSelection = {
-      selectedRowKeys,
       onChange: this.onSelctChange
     }
     return (
       <Fragment>
-        <Table pagination={false} rowSelection={checkBox ? { ...rowSelection }: null} rowKey={rowKey||id} columns={tabHeader} dataSource={dataSource} loading={tableLoading}></Table>
-        <Row style={{marginTop: "20px"}}>
-          <Col span={4}>{this.props.batchShow && <Button onClick={this.batchDelete}>批量删除</Button>}</Col>
-          <Col span={20} >
-            <Pagination
-              onChange={this.changPageNUmber}
-              onShowSizeChange={this.changPageSize}
-              style={{float: "right"}}
-              total={total}
-              showSizeChanger
-              showQuickJumper
-              showTotal={total => `Total ${total} items`}
-            />
-          </Col>
-        </Row>
+        <TableUi
+          rowKey={rowKey}
+          columns={tabHeader}
+          dataSource={dataSource}
+          loading={tableLoading}
+          rowSelection={checkBox ? { ...rowSelection }: null}
+          batchDelete = {this.batchDelete}
+          changPageNUmber={this.changPageNUmber}
+          changPageSize={this.changPageSize}
+          total={total}
+        />
         <Modal title="提示" visible={isModalVisible} onOk={this.handleOk} onCancel={this.handleCancel} cancelText="取消">
           <p>确定删除么？<strong style={{color: 'red'}}>删除后将不可恢复</strong></p>
         </Modal>
