@@ -34,6 +34,12 @@ class TableList extends Component {
         ...params
       }
     }
+    for(let key in requestData.data) {
+      console.log(key)
+      if (requestData.data[key] === '') {
+        delete requestData.data[key]
+      }
+    }
     this.setState({tableLoading: true})
     commonApi(requestData).then(res => {
       const data = res.data
