@@ -1,14 +1,13 @@
-import { createStore } from 'redux'
+import { createStore, combineReducers } from 'redux'
 
-const defaultstate = {
-    aa: 111
+import config from './reducer/config'
+import user from './reducer/user'
+
+const allreducer = {
+  config,
+  user
 }
 
-const refu = (state = defaultstate, action) => {
-    console.log(state)
-    return state
-}
-
-const store = createStore(refu)
+const store = createStore(combineReducers(allreducer))
 
 export default store

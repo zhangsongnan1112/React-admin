@@ -1,7 +1,9 @@
 import React, { Component, Fragment } from 'react';
-import { Form, Input, Button, InputNumber, Radio, message } from 'antd';
+import { message } from 'antd';
 import { addDepartment, departmentDetail, departmentEdit } from '@api/department'
 import FormList from '@c/Form'
+import Store from '@/store/index'
+import { configAction } from '@/store/action/config'
 class DepartAdd extends Component {
   constructor(props) {
     super(props);
@@ -53,6 +55,10 @@ class DepartAdd extends Component {
   }
 
   componentDidMount() {
+    Store.subscribe(()=>{
+      console.log(Store.getState(), 'jfk')
+    })
+    Store.dispatch(configAction({ label: "所有", value: 'all' }))
     if (this.state.id) {
       this.getDetail()
       this.setState({
