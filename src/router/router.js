@@ -22,6 +22,23 @@ const router = [
     ]
   },
   {
+    tilte: '职位',
+    icon: '',
+    path: '/job',
+    children: [
+      {
+        tilte: '职位列表',
+        icon: '',
+        path: '/job/list'
+      },
+      {
+        tilte: '添加职位',
+        icon: '',
+        path: '/job/add'
+      }
+    ]
+  },
+  {
     tilte: '用户管理',
     icon: '',
     path: '/user',

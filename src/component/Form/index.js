@@ -6,8 +6,8 @@ class FormList extends Component {
     super(props);
     this.state = {
       mesPreix: {
-        "Input": "请输入",
-        "InNumber": "请选择",
+        "input": "请输入",
+        "inNumber": "请选择",
         "select": "请选择",
         "radio": "请选择"
       },

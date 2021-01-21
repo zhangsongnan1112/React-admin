@@ -72,3 +72,12 @@ export function departmentEdit(data) {
   })
 }
 
+//添加职位
+export function addJob(data) {
+  return service.request({
+    url: '/job/add/',
+    method: 'post',
+    data
+  })
+}
+
