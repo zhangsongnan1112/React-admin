@@ -2,8 +2,9 @@ import React, { Component, Fragment } from 'react';
 import { message } from 'antd';
 import { addDepartment, departmentDetail, departmentEdit } from '@api/department'
 import FormList from '@c/Form'
-import Store from '@/store/index'
 import { configAction } from '@/store/action/config'
+import { connect } from 'react-redux'
+import { bindActionCreators } from "redux";
 class DepartAdd extends Component {
   constructor(props) {
     super(props);
@@ -55,10 +56,12 @@ class DepartAdd extends Component {
   }
 
   componentDidMount() {
-    Store.subscribe(()=>{
-      console.log(Store.getState(), 'jfk')
-    })
-    Store.dispatch(configAction({ label: "所有", value: 'all' }))
+    // Store.subscribe(()=>{
+    //   console.log(Store.getState(), 'jfk')
+    // })
+    // Store.dispatch(configAction({ label: "所有", value: 'all' }))
+    this.props.configLidt()
+    console.log(this.props.config, 66)
     if (this.state.id) {
       this.getDetail()
       this.setState({
@@ -138,5 +141,18 @@ class DepartAdd extends Component {
     );
   }
 }
+
+const mapStateToProps = (state) => {
+  return {
+    config: state.config
+  }
+
+}
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    configLidt: bindActionCreators(configAction, dispatch)
+  }
+}
  
-export default DepartAdd;
+export default connect(mapStateToProps, mapDispatchToProps)(DepartAdd);
