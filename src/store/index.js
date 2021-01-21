@@ -8,6 +8,6 @@ const allreducer = {
   user
 }
 
-const store = createStore(combineReducers(allreducer))
+const store = createStore(combineReducers(allreducer),  window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__())
 
 export default store
