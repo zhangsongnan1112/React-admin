@@ -1,6 +1,6 @@
 import React, { Component, Fragment } from 'react';
 import { message } from 'antd';
-import { addJob, departmentDetail, departmentEdit } from '@api/department'
+import { addJob, jobDetail, jobtEdit } from '@api/department'
 import FormList from '@c/Form'
 import { configAction } from '@/store/action/config'
 import { connect } from 'react-redux'
@@ -13,20 +13,20 @@ class DepartAdd extends Component {
       loading: false,
       fromItem: [
         {
+          label: '部门名称',
+          name: 'parentId',
+          type: 'selectfromend',
+          required: true,
+          listUrl : 'departentListJob'
+        },
+        {
           label: '职位名称',
           name: 'jobName',
           type: 'input',
           placeholder: "请输入职位名称",
           required: true,
           message: '职位名称不能为空',
-        },
-        {
-          label: '职位人数',
-          name: 'parentId',
-          type: 'input',
-          style: {width: '100px'},
-          required: true,
-        },
+        }, 
         {
           label: '职位状态',
           name: 'status',
@@ -61,7 +61,6 @@ class DepartAdd extends Component {
     // })
     // Store.dispatch(configAction({ label: "所有", value: 'all' }))
     this.props.configLidt()
-    console.log(this.props.config, 66)
     if (this.state.id) {
       this.getDetail()
       this.setState({
@@ -75,7 +74,7 @@ class DepartAdd extends Component {
   }
 
   getDetail = () => {
-    departmentDetail({id: this.state.id}).then(res => {
+    jobDetail({id: this.state.id}).then(res => {
       const data = res.data
       if (data.resCode === 0) {
         this.DepartAdd.setFormValue(data.data)
@@ -84,8 +83,8 @@ class DepartAdd extends Component {
   }
   handlerEdit = (value) => {
     const data = value
-    data.id = this.state.id
-    departmentEdit(data).then(res => {
+    data.jobId = this.state.id
+    jobtEdit(data).then(res => {
       if (res.data.resCode === 0) {
         message.info('修改成功')
         this.setState({
@@ -99,7 +98,6 @@ class DepartAdd extends Component {
     })
   }
   handlerAdd = (value) => {
-    console.log(value, 88)
     addJob(value).then(res => {
       if (res.data.resCode === 0) {
         message.info('添加成功')

@@ -64,7 +64,7 @@ export function departmentDetail(data) {
 }
 
 // 编辑
-export function departmentEdit(data) {
+export function departmentEdit(data) {  
   return service.request({
     url: '/department/edit/',
     method: 'post',
@@ -81,3 +81,20 @@ export function addJob(data) {
   })
 }
 
+
+// job详情
+export function jobDetail(data) {
+  return service.request({
+    url: '/job/detailed/',
+    method: 'post',
+    data
+  })
+}
+
+export function jobtEdit(data) {
+  return service.request({
+    url: '/job/edit/',
+    method: 'post',
+    data
+  })
+}

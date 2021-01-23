@@ -1,19 +1,28 @@
 import React, { Component,Fragment } from 'react';
 import { Form, Input, Button, InputNumber, Radio } from 'antd';
 import PropTypes from 'prop-types';
+import SelectForm from '@c/Select'
 class FormList extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      layout: {
+        labelCol: { span: 2 },
+        wrapperCol: { span: 15 },
+      },
       mesPreix: {
         "input": "请输入",
         "inNumber": "请选择",
         "select": "请选择",
-        "radio": "请选择"
+        "radio": "请选择",
+        "selectfromend": "请选择"
       },
-      setFieldsValue: {}
+      setFieldsValue: {},
+      List: [],
+      parentId: ''
     }
   }
+
   handlerRules = (item) => {
     const { mesPreix } = this.state
     let rules = []
@@ -81,6 +90,21 @@ class FormList extends Component {
     )
   }
 
+// select 接口请求数据
+  selectfromend  = (item) => {
+    const rules = this.handlerRules(item)
+    return(
+      <Form.Item
+        label={item.label}
+        name={item.name}
+        key={item.name}
+        rules={rules}
+      > 
+        <SelectForm url={item.listUrl} parentId={this.state.parentId}/>
+      </Form.Item>
+    )
+  }
+
   initForm = () => {
     const element = []
     const { fromItem } = this.props
@@ -103,6 +127,10 @@ class FormList extends Component {
           element.push(this.radiorender(item))
           break;
         }
+        case 'selectfromend': {
+          element.push(this.selectfromend(item))
+          break;
+        }
       }
     })
     return element
@@ -120,6 +148,9 @@ class FormList extends Component {
     this.form.resetFields()
   }
   setFormValue = (value) => {
+    this.setState({
+      parentId: value.parentId
+    })
     this.form.setFieldsValue({...value})
   }
 
@@ -150,10 +181,7 @@ FormList.propTypes = {
 }
 
 FormList.defaultProps = {
-  layout: {
-    labelCol: { span: 4 },
-    wrapperCol: { span: 16 },
-  },
+  formConfig: {},
   buttonConfig: {
     type: "primary",
     text: '确认添加'

@@ -11,17 +11,17 @@ class DepartLIst extends Component {
       config: {
         url: 'jobList',
         checkBox: true,
-        rowKey: 'id',
+        rowKey: 'jobId',
         tabHeader: [
           {
-            title: '职位',
-            dataIndex: 'name',
-            key: 'name',
+            title: '职位名称',
+            dataIndex: 'jobName',
+            key: 'jobName',
           },
           {
-            title: '人数',
-            dataIndex: 'number',
-            key: 'number',
+            title: '部门名称',
+            dataIndex: 'name',
+            key: 'name',
           },
           {
             title: '状态',
@@ -29,7 +29,7 @@ class DepartLIst extends Component {
             key: 'status',
             render: (text, record, index) => {
               return (
-                <Switch onChange={() => this.handlerChange(record)} loading={this.state.switchId === record.id} checkedChildren="开启" unCheckedChildren="禁用" defaultChecked={record.status ==='1'? true: false} />
+                <Switch onChange={() => this.handlerChange(record)} loading={this.state.switchId === record.jobId} checkedChildren="开启" unCheckedChildren="禁用" defaultChecked={record.status} />
               )
             }
           },
@@ -42,9 +42,9 @@ class DepartLIst extends Component {
               return (
                 <div>
                   <Button type = "primary">
-                    <Link to={{pathname:'/department/add', state: {id: data.id}}}>编辑</Link>
+                    <Link to={{pathname:'/job/add', state: {id: data.jobId}}}>编辑</Link>
                   </Button>
-                  <Button style={{marginLeft: '20px'}} onClick={() => {this.delete(data.id)}}>删除</Button>
+                  <Button style={{marginLeft: '20px'}} onClick={() => {this.delete(data.jobId)}}>删除</Button>
                 </div>
               )
             }
@@ -60,9 +60,9 @@ class DepartLIst extends Component {
   // switch 启用 禁用按钮
   handlerChange(data) {
     if (!data.status) return false
-    this.setState({switchId: data.id})
+    this.setState({switchId: data.jobId})
     const params = {
-      id: data.id,
+      id: data.jobId,
       statue: data.status === '1' ? false : true
     }
     departmentStatus(params).then(res => {

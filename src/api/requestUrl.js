@@ -1,7 +1,9 @@
 const requestUrl = {
   "departentList": '/department/list/',
   "departentListDelete": '/department/delete/',
-  "jobList": '/job/list/'
+  "jobListDelete": '/job/delete/',
+  "jobList": '/job/list/',
+  "departentListJob": '/department/departmentList/',
 
 }
 

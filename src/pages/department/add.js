@@ -47,7 +47,7 @@ class DepartAdd extends Component {
         },
       ],
       formConfig: {
-        initialValues:{number:1, status:true},
+        initialValues:{number:1, status:true}
       },
       buttonConfig: {
         text: '确认添加'
@@ -61,7 +61,6 @@ class DepartAdd extends Component {
     // })
     // Store.dispatch(configAction({ label: "所有", value: 'all' }))
     this.props.configLidt()
-    console.log(this.props.config, 66)
     if (this.state.id) {
       this.getDetail()
       this.setState({
