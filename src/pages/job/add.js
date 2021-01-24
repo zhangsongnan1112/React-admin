@@ -12,6 +12,13 @@ class DepartAdd extends Component {
       id: this.props.location.state ? this.props.location.state.id : '',
       loading: false,
       fromItem: [
+        // {
+        //   label: 'solt',
+        //   name: 'solt',
+        //   type: 'solt',
+        //   required: true,
+        //   soltName: 'title'
+        // },
         {
           label: '部门名称',
           name: 'parentId',
@@ -56,10 +63,6 @@ class DepartAdd extends Component {
   }
 
   componentDidMount() {
-    // Store.subscribe(()=>{
-    //   console.log(Store.getState(), 'jfk')
-    // })
-    // Store.dispatch(configAction({ label: "所有", value: 'all' }))
     this.props.configLidt()
     if (this.state.id) {
       this.getDetail()
@@ -135,6 +138,7 @@ class DepartAdd extends Component {
           onRef={this.getChild}
           buttonConfig={buttonConfig}
         >
+          <div ref={(ele)=>{this.title = ele}}>111</div>
         </FormList>
       </Fragment>
     );

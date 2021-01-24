@@ -1,4 +1,4 @@
-import React, { Component,Fragment } from 'react';
+import React, { Children, Component,Fragment } from 'react';
 import { Form, Input, Button, InputNumber, Radio } from 'antd';
 import PropTypes from 'prop-types';
 import SelectForm from '@c/Select'
@@ -103,6 +103,22 @@ class FormList extends Component {
       </Form.Item>
     )
   }
+ 
+  // 插槽 soltrender
+
+  soltrender  = (item) => {
+    const rules = this.handlerRules(item)
+    return(
+      <Form.Item
+        label={item.label}
+        name={item.name}
+        key={item.name}
+        rules={rules}
+      > 
+        { this.props.children }
+      </Form.Item>
+    )
+  }
 
   initForm = () => {
     const element = []
@@ -128,6 +144,10 @@ class FormList extends Component {
         }
         case 'selectfromend': {
           element.push(this.selectfromend(item))
+          break;
+        }
+        case 'solt': {
+          element.push(this.soltrender(item))
           break;
         }
       }
