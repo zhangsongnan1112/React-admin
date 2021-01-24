@@ -18,8 +18,7 @@ class FormList extends Component {
         "selectfromend": "请选择"
       },
       setFieldsValue: {},
-      List: [],
-      parentId: ''
+      List: []
     }
   }
 
@@ -100,7 +99,7 @@ class FormList extends Component {
         key={item.name}
         rules={rules}
       > 
-        <SelectForm url={item.listUrl} parentId={this.state.parentId}/>
+        <SelectForm url={item.listUrl}/>
       </Form.Item>
     )
   }
@@ -148,9 +147,6 @@ class FormList extends Component {
     this.form.resetFields()
   }
   setFormValue = (value) => {
-    this.setState({
-      parentId: value.parentId
-    })
     this.form.setFieldsValue({...value})
   }
 

@@ -20,21 +20,33 @@ class SelectForm extends Component {
     }
   }
   render() {
-    const { list} = this.state 
+    const { list } = this.state
+    const { value, label } = this.props.propkey || {}
     return (
-      <Select onChange={this.onCurrencyChange} value={this.state.value || this.props.parentId}> 
+      <Select onChange={this.onCurrencyChange} value={this.state.value}> 
         {
           list.map(item => {
             return (
             <Select.Option 
-              key={item.id} 
-              value={item.id}
-              >{item.name}</Select.Option>
+              key={item[value] || item.id}
+              value={item[value] || item.id}
+              >{item[label] || item.name}</Select.Option>
             )
           })
           }
       </Select>
     );
+  }
+
+  static getDerivedStateFromProps(nextProps, prevState) {
+    const { value } = nextProps
+    if (!value) return false
+    if (value !== prevState)  {
+      return {
+        value
+      }
+    }
+    return null
   }
 
   componentDidMount() {
