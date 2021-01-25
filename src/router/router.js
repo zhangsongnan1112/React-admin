@@ -59,7 +59,12 @@ const router = [
         path: '/user/navigation'
       }
     ]
-  }
+  },
+  {
+    tilte: '上传',
+    icon: '',
+    path: '/upload/index'
+  },
 ]
 
 export default router
