@@ -1,5 +1,5 @@
 import React, { Component, Fragment } from 'react';
-import UplaodComponent from '@c/Upload/index'
+import UplaodComponent from '@c/upload/index'
 class Upload extends Component {
   constructor(props) {
     super(props);
@@ -8,7 +8,8 @@ class Upload extends Component {
   render() { 
     return (
       <Fragment>
-        <h2>图片上传页面</h2>
+        <h2>七牛云实现图片上传</h2>
+        <br></br>
         <UplaodComponent></UplaodComponent>
       </Fragment>
     );

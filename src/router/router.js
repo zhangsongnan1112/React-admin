@@ -65,6 +65,11 @@ const router = [
     icon: '',
     path: '/upload/index'
   },
+  {
+    tilte: '富文本',
+    icon: '',
+    path: '/tinymce/index'
+  }
 ]
 
 export default router
