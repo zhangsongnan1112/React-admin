@@ -18,7 +18,10 @@ class FormList extends Component {
         "selectfromend": "请选择"
       },
       setFieldsValue: {},
-      List: []
+      List: [],
+      styleItem: {
+        width: '400px'
+      }
     }
   }
 
@@ -37,6 +40,7 @@ class FormList extends Component {
 
   inputrender = (item) => {
     const rules = this.handlerRules(item)
+    const { styleItem } = this.state
     return(
       <Form.Item
         label={item.label}
@@ -45,7 +49,7 @@ class FormList extends Component {
         rules={rules}
       > 
       {
-        item.type === "input" ? <Input placeholder={item.placeholder} style={item.style}/> :
+        item.type === "input" ? <Input placeholder={item.placeholder} style={item.style || styleItem}/> :
         <Input.TextArea placeholder={item.placeholder} style={item.style}/>
       }
         
@@ -92,12 +96,14 @@ class FormList extends Component {
 // select 接口请求数据
   selectfromend  = (item) => {
     const rules = this.handlerRules(item)
+    const { styleItem } = this.state
     return(
       <Form.Item
         label={item.label}
         name={item.name}
         key={item.name}
         rules={rules}
+        style={item.style || styleItem}
       > 
         <SelectForm url={item.listUrl}/>
       </Form.Item>
@@ -181,10 +187,16 @@ class FormList extends Component {
             initialValues={ initialValues } 
             onFinish={this.onFinish}
           >
-            {this.initForm()}
-            <Form.Item>
-              <Button loading={btnLoading} type={buttonConfig.type|| 'primary'} htmlType="submit">{buttonConfig.text}</Button>
-            </Form.Item>
+            {
+              this.initForm()
+            }
+            {
+              buttonConfig ? (
+                <Form.Item>
+                  <Button loading={btnLoading} type={buttonConfig.type|| 'primary'} htmlType="submit">{buttonConfig.text}</Button>
+                </Form.Item>
+              ) : ''
+            }
           </Form>
       </Fragment>
     );
@@ -198,10 +210,7 @@ FormList.propTypes = {
 
 FormList.defaultProps = {
   formConfig: {},
-  buttonConfig: {
-    type: "primary",
-    text: '确认添加'
-  }
+  buttonConfig: {}
 }
  
 export default FormList;

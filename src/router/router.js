@@ -39,17 +39,17 @@ const router = [
     ]
   },
   {
-    tilte: '用户管理',
+    tilte: '职员管理',
     icon: '',
     path: '/user',
     children: [
       {
-        tilte: '用户列表',
+        tilte: '职员列表',
         icon: '',
         path: '/user/list'
       },
       {
-        tilte: '添加用户',
+        tilte: '添加职员',
         icon: '',
         path: '/user/add'
       },
