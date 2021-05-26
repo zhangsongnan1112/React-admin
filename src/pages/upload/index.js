@@ -1,5 +1,5 @@
 import React, { Component, Fragment } from 'react';
-import UplaodComponent from '@c/upload/index'
+import UplaodComponent from '@/component/Upload/index'
 class Upload extends Component {
   constructor(props) {
     super(props);
