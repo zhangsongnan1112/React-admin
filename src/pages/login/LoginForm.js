@@ -13,6 +13,7 @@ import CryptoJS from 'crypto-js'
 class LoginForm extends Component {
   constructor(props) {
     super(props);
+    console.log(this.props, 111)
     this.state = {
       username: '',
       password: '',

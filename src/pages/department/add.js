@@ -5,6 +5,7 @@ import FormList from '@c/Form'
 import { configAction } from '@/store/action/config'
 import { connect } from 'react-redux'
 import { bindActionCreators } from "redux";
+import Store from '@/store/index'
 class DepartAdd extends Component {
   constructor(props) {
     super(props);
@@ -56,10 +57,10 @@ class DepartAdd extends Component {
   }
 
   componentDidMount() {
-    // Store.subscribe(()=>{
-    //   console.log(Store.getState(), 'jfk')
-    // })
-    // Store.dispatch(configAction({ label: "所有", value: 'all' }))
+    Store.dispatch(configAction({ label: "所有", value: 'all' }))
+    Store.subscribe(()=>{
+      console.log(Store.getState(), 'jfk')
+    })
     this.props.configLidt()
     if (this.state.id) {
       this.getDetail()

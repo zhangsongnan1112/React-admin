@@ -7,6 +7,7 @@ const defaultstate = {
 
 const configReducer = (state = defaultstate, action) => {
   if (action.type === 'ADD_STATE') {
+    debugger
     return {
       departmentType: [
         ...state.departmentType,
