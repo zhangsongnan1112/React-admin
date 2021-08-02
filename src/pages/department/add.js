@@ -1,11 +1,12 @@
 import React, { Component, Fragment } from 'react';
-import { message } from 'antd';
+import { message, Button } from 'antd';
 import { addDepartment, departmentDetail, departmentEdit } from '@api/department'
 import FormList from '@c/Form'
 import { configAction } from '@/store/action/config'
 import { connect } from 'react-redux'
 import { bindActionCreators } from "redux";
 import Store from '@/store/index'
+import {setTokenType} from '@/store/action/type'
 class DepartAdd extends Component {
   constructor(props) {
     super(props);
@@ -40,7 +41,7 @@ class DepartAdd extends Component {
         },
         {
           label: '部门详情',
-          name: 'content',
+          name: 'content1',
           type: 'textArea',
           required: true,
           message: '部门详情不能为空',
@@ -119,10 +120,19 @@ class DepartAdd extends Component {
   }
 
   onFinish = (values) => {
+    console.log('department', values)
     this.setState({
       loading: true
     })
     this.state.id ? this.handlerEdit(values) : this.handlerAdd(values)
+  }
+
+  handlerStore = () => {
+    Store.dispatch({
+      type: setTokenType,
+      value: 111
+    })
+    console.log(Store.getState().user, 'handlerStore')
   }
   render() {
     const { loading, fromItem, formConfig, buttonConfig } = this.state
@@ -137,14 +147,20 @@ class DepartAdd extends Component {
           buttonConfig={buttonConfig}
         >
         </FormList>
+        {this.props.stateToken}
+        <br></br>
+        <Button onClick={this.handlerStore}>nihao</Button>
+        <Button onClick={() => console.log(Store.getState().user)}>nihao</Button>
       </Fragment>
     );
   }
 }
 
 const mapStateToProps = (state) => {
+  console.log(state.user.token, 'statestate')
   return {
-    config: state.config
+    config: state.config,
+    stateToken: state.user.token
   }
 
 }
