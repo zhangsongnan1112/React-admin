@@ -14,6 +14,19 @@ class DepartAdd extends Component {
       id: this.props.location.state ? this.props.location.state.id : '',
       loading: false,
       fromItem: [
+        
+      ],
+      formConfig: {
+        initialValues:{number:1, status:true}
+      },
+      buttonConfig: {
+        text: '确认添加'
+      }
+    }
+  }
+  initFormList = () => {
+    this.setState({
+      fromItem: [
         {
           label: '部门名称',
           name: 'name',
@@ -34,10 +47,7 @@ class DepartAdd extends Component {
           name: 'status',
           type: 'radio',
           required: true,
-          options: [
-            { label: "禁用", value: false },
-            { label: "启用", value: true },
-          ]
+          options: [...this.props.config.departmentType]
         },
         {
           label: '部门详情',
@@ -47,22 +57,26 @@ class DepartAdd extends Component {
           message: '部门详情不能为空',
           placeholder: "请输入部门详情",
         },
-      ],
-      formConfig: {
-        initialValues:{number:1, status:true}
-      },
-      buttonConfig: {
-        text: '确认添加'
-      }
-    }
+      ]
+    })
   }
 
+  componentDidUpdate(prevProps) {
+    // 检查 props 是否有变化
+    if (prevProps.config.departmentType.length !== this.props.config.departmentType.length) {
+        this.initFormList();
+    }
+}
+
+
   componentDidMount() {
-    Store.dispatch(configAction({ label: "所有", value: 'all' }))
-    Store.subscribe(()=>{
-      console.log(Store.getState(), 'jfk')
-    })
-    this.props.configLidt()
+    this.props.configLidt({ label: "所有", value: 'all' })
+  
+    // Store.subscribe(()=>{
+    //   console.log(Store.getState(),  this.props,'里面')
+    // })
+    //this.props.configLidt()
+    console.log(Store.getState(),  this.props,'外面')
     if (this.state.id) {
       this.getDetail()
       this.setState({
@@ -74,6 +88,8 @@ class DepartAdd extends Component {
       this.DepartAdd.resetForm()
     }
   }
+
+
 
   getDetail = () => {
     departmentDetail({id: this.state.id}).then(res => {
@@ -151,6 +167,15 @@ class DepartAdd extends Component {
         <br></br>
         <Button onClick={this.handlerStore}>nihao</Button>
         <Button onClick={() => console.log(Store.getState().user)}>nihao</Button>
+
+
+        {
+          this.props.config.departmentType.map(item => {
+            return (
+              item.label
+            )
+          })
+        }
       </Fragment>
     );
   }
@@ -159,7 +184,7 @@ class DepartAdd extends Component {
 const mapStateToProps = (state) => {
   console.log(state.user.token, 'statestate')
   return {
-    config: state.config,
+    config: {...state.config},
     stateToken: state.user.token
   }
 
