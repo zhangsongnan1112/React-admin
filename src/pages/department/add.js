@@ -7,6 +7,7 @@ import { connect } from 'react-redux'
 import { bindActionCreators } from "redux";
 import Store from '@/store/index'
 import {setTokenType} from '@/store/action/type'
+
 class DepartAdd extends Component {
   constructor(props) {
     super(props);
@@ -150,6 +151,10 @@ class DepartAdd extends Component {
     })
     console.log(Store.getState().user, 'handlerStore')
   }
+
+  handleClick = () => {
+    this.props.history.push('/department/list');
+  }
   render() {
     const { loading, fromItem, formConfig, buttonConfig } = this.state
     return (
@@ -168,6 +173,7 @@ class DepartAdd extends Component {
         <Button onClick={this.handlerStore}>nihao</Button>
         <Button onClick={() => console.log(Store.getState().user)}>nihao</Button>
 
+        <Button  onClick={this.handleClick} >跳转到列表页面</Button>
 
         {
           this.props.config.departmentType.map(item => {

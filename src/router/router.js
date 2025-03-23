@@ -5,6 +5,24 @@ const router = [
     path: '/'
   },
   {
+    tilte: '测试',
+    icon: '',
+    path: '/test',
+    children: [
+      {
+        tilte: 'useState闭包问题',
+        icon: '',
+        path: '/test/useState'
+      },
+      {
+        tilte: '父子组件生命周期',
+        icon: '',
+        path: '/test/life'
+      },
+     
+    ]
+  },
+  {
     tilte: '部门',
     icon: '',
     path: '/department',

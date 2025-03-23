@@ -3,6 +3,7 @@ import { Form, Input, Button,  message, Switch } from 'antd';
 import { departmentStatus } from '@api/department'
 import { withRouter, Link } from 'react-router-dom'
 import TableList from '@c/TableList'
+
 class DepartLIst extends Component {
   constructor(props) {
     super(props);
@@ -103,6 +104,7 @@ class DepartLIst extends Component {
           </Form.Item>
         </Form>
         <TableList config={this.state.config} batchShow={true} onRef={this.getChildRef}></TableList>
+        <br></br>
       </Fragment>
     );
   }
